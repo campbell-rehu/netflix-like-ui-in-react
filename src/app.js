@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import TitleList from './TitleList';
 
-export default class App extends React.Component {
+class App extends React.Component {
     constructor() {
         super();
         this.state = {
@@ -13,12 +13,20 @@ export default class App extends React.Component {
     }
 
     handleChange(event) {
-
+        this.setState({ searchTerm: event.target.value });
     }
 
     handleKeyUp(event) {
+        var myInit = {
+            method: 'GET',
+            headers: new Headers(),
+            mode: 'no-cors',
+            cache: 'default'
+        };
+
         if (event.key === 'Enter' && this.state.searchTerm !== '') {
-            var searchUrl = `search/multi?query=${this.state.searchTerm}+`
+            var searchUrl = `http://localhost:8000/search/${this.state.searchTerm}`;
+            fetch(searchUrl).then((data) => { console.log(data) }).catch((err) => { console.log(err) });
         }
     }
 
@@ -29,11 +37,12 @@ export default class App extends React.Component {
                     type="search"
                     name="title"
                     value={this.state.searchTerm}
-                    onKeyUp={this.handleKeyUp}
-                    onChange={this.handleChange}
+                    onKeyUp={this.handleKeyUp.bind(this)}
+                    onChange={this.handleChange.bind(this)}
                     placeholder="Search for a title" />
-                <TitleList></TitleList>
             </div>        
         )
     }
 }
+
+ReactDOM.render(<App />, document.getElementById('app'));
