@@ -2,44 +2,42 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 
 import TitleList from './TitleList';
-
+import Search from './search';
 class App extends React.Component {
     constructor() {
         super();
-        apiKey = '21bcec6fc9c9ab14d65341df7842343f';
         this.state = {
-            searchTerm: '',
-            searchUrl: ''
+            searchedMovies: [],
+            searchUrl: '',
+            apiKey: '21bcec6fc9c9ab14d65341df7842343f'
         };
     }
 
-    handleChange(event) {
-        this.setState({ searchTerm: event.target.value });
-    }
-
-    handleKeyUp(event) {
-        if (event.key === 'Enter' && this.state.searchTerm !== '') {
-            var searchUrl = `https://api.themoviedb.org/3/${this.props.searchUrl}&api_key=${this.apiKey}`;
-            fetch(searchUrl)
-                .then((data) => {
-                    console.log(data)
-                })
-                .catch((err) => {
-                    console.log(err)
-                });
-        }
+    handleKeyUp(term) {
+        var searchUrl = `https://api.themoviedb.org/3/search/movie?api_key=21bcec6fc9c9ab14d65341df7842343f&query=${term}`;            
+        fetch(searchUrl)
+            .then((res) => {
+                res.json()
+                    .then(data => {
+                        var foundMovies = data.results;
+                        this.setState({ searchedMovies: foundMovies });
+                    });
+            })
+            .catch((err) => {
+                console.log(err)
+            });
+        this.setState({ searchUrl: searchUrl });
     }
 
     render() {
         return (
             <div>
-                <input
-                    type="search"
-                    name="title"
-                    value={this.state.searchTerm}
-                    onKeyUp={this.handleKeyUp.bind(this)}
-                    onChange={this.handleChange.bind(this)}
-                    placeholder="Search for a title" />
+                <header>
+                    <Search searchTerm={this.handleKeyUp.bind(this)}/>
+                </header>
+                <TitleList title="Search Results" url={this.state.searchUrl} />
+                <TitleList title="Top TV Picks" url={'discover/tv?sort_by=popularity.desc&page=1'} />
+                <TitleList title="Trending Movies" url={'discover/movie?sort_by=popularity.desc&page=1'} />
             </div>        
         )
     }
