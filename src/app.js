@@ -6,6 +6,7 @@ import TitleList from './TitleList';
 class App extends React.Component {
     constructor() {
         super();
+        apiKey = '21bcec6fc9c9ab14d65341df7842343f';
         this.state = {
             searchTerm: '',
             searchUrl: ''
@@ -17,16 +18,15 @@ class App extends React.Component {
     }
 
     handleKeyUp(event) {
-        var myInit = {
-            method: 'GET',
-            headers: new Headers(),
-            mode: 'no-cors',
-            cache: 'default'
-        };
-
         if (event.key === 'Enter' && this.state.searchTerm !== '') {
-            var searchUrl = `http://localhost:8000/search/${this.state.searchTerm}`;
-            fetch(searchUrl).then((data) => { console.log(data) }).catch((err) => { console.log(err) });
+            var searchUrl = `https://api.themoviedb.org/3/${this.props.searchUrl}&api_key=${this.apiKey}`;
+            fetch(searchUrl)
+                .then((data) => {
+                    console.log(data)
+                })
+                .catch((err) => {
+                    console.log(err)
+                });
         }
     }
 
