@@ -9567,6 +9567,7 @@ var App = function (_React$Component) {
 
         var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this));
 
+        apiKey = '21bcec6fc9c9ab14d65341df7842343f';
         _this.state = {
             searchTerm: '',
             searchUrl: ''
@@ -9576,12 +9577,19 @@ var App = function (_React$Component) {
 
     _createClass(App, [{
         key: 'handleChange',
-        value: function handleChange(event) {}
+        value: function handleChange(event) {
+            this.setState({ searchTerm: event.target.value });
+        }
     }, {
         key: 'handleKeyUp',
         value: function handleKeyUp(event) {
             if (event.key === 'Enter' && this.state.searchTerm !== '') {
-                var searchUrl = 'search/multi?query=' + this.state.searchTerm + '+';
+                var searchUrl = 'https://api.themoviedb.org/3/' + this.props.searchUrl + '&api_key=' + this.apiKey;
+                fetch(searchUrl).then(function (data) {
+                    console.log(data);
+                }).catch(function (err) {
+                    console.log(err);
+                });
             }
         }
     }, {
@@ -9594,10 +9602,9 @@ var App = function (_React$Component) {
                     type: 'search',
                     name: 'title',
                     value: this.state.searchTerm,
-                    onKeyUp: this.handleKeyUp,
-                    onChange: this.handleChange,
-                    placeholder: 'Search for a title' }),
-                _react2.default.createElement(_TitleList2.default, null)
+                    onKeyUp: this.handleKeyUp.bind(this),
+                    onChange: this.handleChange.bind(this),
+                    placeholder: 'Search for a title' })
             );
         }
     }]);
