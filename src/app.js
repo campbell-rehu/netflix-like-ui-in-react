@@ -19,15 +19,28 @@ class App extends React.Component {
     componentDidMount() {
         var topTVUrl = `${this.state.urlStart}/discover/tv?api_key=${this.state.apiKey}&sort_by=popularity.desc&page=1`
         var topMovieUrl = `${this.state.urlStart}/discover/movie?api_key=${this.state.apiKey}&sort_by=popularity.desc&page=1`
-        this.fetch(topTVUrl);
-        this.fetch(topMovieUrl);
+        this.fetchTV(topTVUrl);
+        this.fetchMovie(topMovieUrl);
     }
-    fetch(url) {
+    fetchTV(url) {
         fetch(url)
             .then((res) => {
                 res.json()
                     .then((data) => {
                         this.setState({ topTV: data.results });
+                    })
+                    .catch((err) => { console.log(err) });
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    }
+    fetchMovie(url) {
+        fetch(url)
+            .then((res) => {
+                res.json()
+                    .then((data) => {
+                        this.setState({ topMovie: data.results });
                     })
                     .catch((err) => { console.log(err) });
             })
@@ -59,9 +72,9 @@ class App extends React.Component {
                 <header>
                     <Search searchTerm={this.handleKeyUp.bind(this)}/>
                 </header>
-                <TitleList title="Search Results" items={this.state.searchedMovies} />
-                <TitleList title="Top TV Picks" items={this.state.topTV}/>
-                <TitleList title="Trending Movies" items={this.state.topMovie}/>
+                <TitleList title="Search Results" tv={false} items={this.state.searchedMovies} />
+                <TitleList title="Top TV Picks" tv={true} items={this.state.topTV}/>
+                <TitleList title="Trending Movies" tv={false} items={this.state.topMovie}/>
             </div>        
         )
     }
