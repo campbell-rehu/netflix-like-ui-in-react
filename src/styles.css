@@ -1,3 +1,52 @@
 body {
-    background-color: #f7f7f7;
+    font-family: Avenir;
+    color: white;
+    background-color: #000;
+}
+
+.container {
+    margin-bottom: 50px;
+}
+
+.pure-u-1-2 {
+    height: 250px;
+}
+
+.pure-u-1-2:hover {
+    cursor: pointer;
+    opacity: 0.5;
+}
+
+.item-title {
+    text-align: center;
+    margin-top: 50%;
+}
+
+.poster {
+    height: 100%;
+}
+
+.section-title {
+    clear: both;
+}
+
+#search {
+    height: 50px;
+    color: #fff;
+    outline: none;
+    background: none;
+    border-radius: 50px;
+    border-width: 5px;
+    font-size: 1.05em;
+    width: 200px;
+    transition-property: width;
+    padding-left: 20px;
+    transition-duration: 0.5s;
+}
+
+#search:focus {
+    width: 300px;
+    border-color: red;
+    transition-property: width;
+    transition-duration: 0.5s;
 }

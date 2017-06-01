@@ -27,7 +27,7 @@ class App extends React.Component {
             .then((res) => {
                 res.json()
                     .then((data) => {
-                        this.setState({ topTV: data.results });
+                        this.setState({ topTV: data.results});
                     })
                     .catch((err) => { console.log(err) });
             })
@@ -40,7 +40,7 @@ class App extends React.Component {
             .then((res) => {
                 res.json()
                     .then((data) => {
-                        this.setState({ topMovie: data.results });
+                        this.setState({ topMovie: data.results});
                     })
                     .catch((err) => { console.log(err) });
             })
@@ -69,9 +69,10 @@ class App extends React.Component {
     render() {
         return (
             <div>
-                <header>
+                <div className="container">
+                    <h1 id="title">Movies DB</h1>
                     <Search searchTerm={this.handleKeyUp.bind(this)}/>
-                </header>
+                </div>
                 <TitleList title="Search Results" tv={false} items={this.state.searchedMovies} />
                 <TitleList title="Top TV Picks" tv={true} items={this.state.topTV}/>
                 <TitleList title="Trending Movies" tv={false} items={this.state.topMovie}/>

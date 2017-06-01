@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack",
-    "serve": "webpack-dev-server --hot --inline --content-base=src",
+    "serve": "webpack-dev-server --open --hot --inline --content-base=src",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
