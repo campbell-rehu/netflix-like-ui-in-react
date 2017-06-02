@@ -1,4 +1,4 @@
-# Netflix-Like App
+# Netflix-Like Landing Page
 
 ![screenshot](./images/screenshot.png)
 
